@@ -183,20 +183,19 @@ public:
          *   vMerkleTree: e0028e
          */
         const char* pszTimestamp = "E quando eu pensar em desistir, lembro-me dos motivos que te fizeram aguentar ate agora!";
-        CMutableTransaction txNew;
+	CMutableTransaction txNew;
         txNew.vin.resize(1);
-        txNew.vout.resize(1);
-        txNew.vin[0].scriptSig = CScript() << 486604799 << CScriptNum(4) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
+	txNew.vout.resize(1);
+	txNew.vin[0].scriptSig = CScript() << 0 << CScriptNum(42) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
         txNew.vout[0].nValue = 1 * COIN;
-        txNew.vout[0].scriptPubKey = CScript() << ParseHex("046acdcdecdea7b6b17c217f27e73ca2acbddda8e70570ff355dbe1af30347d280f66067d136a797fce4d01227cc5be988676184d842930765fcce5dc011ad158e") << OP_CHECKSIG;
+	txNew.vout[0].SetEmpty();
         genesis.vtx.push_back(txNew);
         genesis.hashPrevBlock = 0;
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
-        genesis.nTime = 1498159985;
-        genesis.nBits = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce = 857701;
-
+        genesis.nTime    = 1498159985;
+        genesis.nBits    = bnProofOfWorkLimit.GetCompact();
+        genesis.nNonce   = 857701;
 
         hashGenesisBlock = genesis.GetHash();
         printf("Genesis mainnet - %s\n",hashGenesisBlock.ToString().c_str());
