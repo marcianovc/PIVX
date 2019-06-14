@@ -12,11 +12,12 @@
 #include "tinyformat.h"
 #include "utilstrencodings.h"
 #include "util.h"
+#include "crypto/hashblock.h"
 
 uint256 CBlockHeader::GetHash() const
 {
     if(nVersion < 4)
-        return HashQuark(BEGIN(nVersion), END(nNonce));
+	return Hash9(BEGIN(nVersion), END(nNonce));
 
     return Hash(BEGIN(nVersion), END(nAccumulatorCheckpoint));
 }
